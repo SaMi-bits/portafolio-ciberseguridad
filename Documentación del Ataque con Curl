@@ -1,0 +1,79 @@
+Informe Técnico: Documentación del Ataque con Curl
+
+#1. Objetivo del Ataque
+
+El propósito del ataque fue realizar una solicitud HTTP POST automatizada para probar el acceso no autorizado a un portal de autenticación web ubicado en la dirección IP 192.168.1.1.
+
+#2. Entorno de Trabajo
+
+Sistema Operativo: Kali Linux (entorno de pruebas)
+
+Terminal: Terminal Bash
+
+Red Local: 192.168.1.0/24
+
+Dispositivo Objetivo: Portal de autenticación web en 192.168.1.1
+
+#3. Herramientas Utilizadas
+
+``: Herramienta de línea de comandos para transferencias de datos con URLs.
+
+``: Archivo utilizado para manejar cookies de sesión durante la solicitud.
+
+#4. Comando Utilizado
+
+Se intentó realizar un ataque de fuerza bruta básico utilizando curl para enviar credenciales al formulario de autenticación.
+
+curl -c cookies.txt -b cookies.txt -L \
+-d "username=admin&password=1234" \
+-H "Content-Type: application/x-www-form-urlencoded" \
+-H "Referer:https://192.168.1.1/login.html" \
+-H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)" \
+http://192.168.1.1/goform/WebLogin
+
+#5. Errores Encontrados y Soluciones
+
+Error de sintaxis con los paréntesis:
+
+Mensaje: bash: error sintáctico cerca del elemento inesperado '('
+
+Solución: Se eliminaron los paréntesis innecesarios en el comando y se verificaron las comillas para asegurar su correcto cierre.
+
+No se obtenía respuesta visible:
+
+Se sospecha que la respuesta del servidor no se estaba mostrando en la terminal.
+
+Solución Propuesta: Añadir el parámetro -v para obtener una respuesta más detallada.
+
+curl -v -c cookies.txt -b cookies.txt -L \
+-d "username=admin&password=1234" \
+-H "Content-Type: application/x-www-form-urlencoded" \
+-H "Referer:https://192.168.1.1/login.html" \
+-H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)" \
+http://192.168.1.1/goform/WebLogin
+
+#6. Resultados Observados
+
+La ejecución del comando no generó errores, pero no se recibió ninguna respuesta clara sobre el resultado del intento de inicio de sesión.
+
+Posibles causas a investigar:
+
+El servidor podría estar ignorando las solicitudes automáticas.
+
+Revisión de los encabezados y cookies enviados.
+
+#7. Pasos Siguientes
+
+Captura de Tráfico: Utilizar herramientas como Wireshark para analizar la comunicación y confirmar si la solicitud llega al servidor.
+
+Automatización: Emplear herramientas como Hydra o Burp Suite para realizar pruebas más avanzadas.
+
+Instalación en SSD: Migrar el entorno de pruebas a un SSD para mejorar el rendimiento y rapidez en las pruebas.
+
+Revisión de Logs del Servidor: Si se tiene acceso, revisar los registros del servidor para identificar respuestas.
+
+#8. Conclusión
+
+Se logró avanzar en la ejecución del ataque automatizado con curl, resolviendo errores de sintaxis. Sin embargo, aún falta determinar la respuesta exacta del servidor y verificar si el intento de inicio de sesión fue exitoso.
+
+Este documento quedará como base para las siguientes pruebas y análisis del entorno de seguridad. Se continuará con la investigación después de la migración al nuevo entorno en SSD.
